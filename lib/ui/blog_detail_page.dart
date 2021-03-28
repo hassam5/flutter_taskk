@@ -2,25 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'component/blog_body.dart';
 
-class BlogPage extends StatefulWidget{
+class BlogDetailPage extends StatefulWidget{
   String id;
 
-  BlogPage(this.id);
+  BlogDetailPage(this.id);
 
   @override
-  _BlogPageState createState() => _BlogPageState();
+  _BlogDetailPageState createState() => _BlogDetailPageState();
 }
 
-class _BlogPageState extends State<BlogPage> {
+class _BlogDetailPageState extends State<BlogDetailPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text("Juventus",
-        ),
-      ),
       body: BlogBody(widget.id),
     );
   }

@@ -5,21 +5,17 @@ import 'package:flutter_task/model/blog_list.dart';
 import 'package:flutter_task/model/login_response.dart';
 import 'package:http/http.dart' as http;
 
-
 class ApiClient {
   ApiClient._();
 
   static final ApiClient apiClient = ApiClient._();
 
-
   static final http.Client _httpClient = http.Client();
 
-
-  Future<LoginResponse> createLoginState(String username,
-      String password) async {
+  Future<LoginResponse> createLoginState(
+      String username, String password) async {
     var request = http.Request('POST',
         Uri.parse('https://60585b2ec3f49200173adcec.mockapi.io/api/v1/login'));
-
 
     http.StreamedResponse response = await request.send();
 
@@ -29,34 +25,15 @@ class ApiClient {
       final parsed = json.decode(res);
       print("fff" + jsonEncode(parsed));
       return LoginResponse.fromJson(parsed);
-    }
-    else {
+    } else {
       print(response.reasonPhrase);
     }
-
-
-    // var request = http.Request('POST', Uri.parse('https://60585b2ec3f49200173adcec.mockapi.io/api/v1/login'));
-    // http.StreamedResponse response = await request.send();
-    // if (response.statusCode == 200) {
-    // //  print("ppppp"+await response.stream.bytesToString());
-    //   String res = await response.stream.bytesToString();
-    //      final parsed = json.decode(res);
-    //      print("fff" + jsonEncode(parsed));
-    //      return LoginResponse.fromJson(parsed);
-    // }
-    // else {
-    //   print(response.reasonPhrase);
-    // }
-
-
   }
-
 
   Future<List<ListBlog>> GetBlogList() async {
     try {
-      final response = await _httpClient.get(
-          Uri.parse("https://60585b2ec3f49200173adcec.mockapi.io/api/v1/blogs")
-      );
+      final response = await _httpClient.get(Uri.parse(
+          "https://60585b2ec3f49200173adcec.mockapi.io/api/v1/blogs"));
 
       print("GetBlogList " + response.body);
       //return parseOtp(response.body);
@@ -77,26 +54,25 @@ class ApiClient {
     return parsed.map<ListBlog>((json) => ListBlog.fromJson(json)).toList();
   }
 
-  Future <ListBlog> GetBlogDetails( String token, String id) async {
-    var headers = {
-      'Authorization': 'Bearer $token'
-    };
-    var request = http.Request('GET', Uri.parse('https://60585b2ec3f49200173adcec.mockapi.io/api/v1/blogs/$id'));
+
+
+  Future<ListBlog> GetBlogDetails(String token, String id) async {
+    var headers = {'Authorization': 'Bearer $token'};
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            'https://60585b2ec3f49200173adcec.mockapi.io/api/v1/blogs/$id'));
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-   //   print(await response.stream.bytesToString());
+      //   print(await response.stream.bytesToString());
       String res = await response.stream.bytesToString();
       final parsed = json.decode(res);
       print("Detailed" + jsonEncode(parsed));
       return ListBlog.fromJson(parsed);
-    }
-    else {
+    } else {
       print(response.reasonPhrase);
     }
-
-
-
   }
 }
