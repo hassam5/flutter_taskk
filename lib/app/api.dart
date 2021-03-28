@@ -12,6 +12,7 @@ class ApiClient {
 
   static final http.Client _httpClient = http.Client();
 
+  //Method for login. getting token.
   Future<LoginResponse> createLoginState(
       String username, String password) async {
     var request = http.Request('POST',
@@ -19,8 +20,8 @@ class ApiClient {
 
     http.StreamedResponse response = await request.send();
 
+    //API result
     if (response.statusCode == 201) {
-      //   print(await response.stream.bytesToString());
       String res = await response.stream.bytesToString();
       final parsed = json.decode(res);
       print("fff" + jsonEncode(parsed));
@@ -30,13 +31,13 @@ class ApiClient {
     }
   }
 
+  //Method for blog list
   Future<List<ListBlog>> GetBlogList() async {
     try {
       final response = await _httpClient.get(Uri.parse(
           "https://60585b2ec3f49200173adcec.mockapi.io/api/v1/blogs"));
 
       print("GetBlogList " + response.body);
-      //return parseOtp(response.body);
       return parseMyBooking(response.body);
     } on SocketException {
       return Future.error("check your internet connection");
@@ -48,6 +49,7 @@ class ApiClient {
     }
   }
 
+  //API result
   static List<ListBlog> parseMyBooking(String responseBody) {
     print("GetCredits " + "calling");
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
@@ -55,7 +57,7 @@ class ApiClient {
   }
 
 
-
+  //Method for blog detail ID wise.
   Future<ListBlog> GetBlogDetails(String token, String id) async {
     var headers = {'Authorization': 'Bearer $token'};
     var request = http.Request(
@@ -65,8 +67,8 @@ class ApiClient {
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
 
+    //API result
     if (response.statusCode == 200) {
-      //   print(await response.stream.bytesToString());
       String res = await response.stream.bytesToString();
       final parsed = json.decode(res);
       print("Detailed" + jsonEncode(parsed));

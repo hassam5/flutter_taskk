@@ -9,8 +9,8 @@ import 'package:flutter_task/model/blog_list.dart';
 import 'package:jiffy/jiffy.dart';
 
 class BlogBody extends StatefulWidget {
-  String id;
 
+  String id;
   BlogBody(this.id);
 
   @override
@@ -21,6 +21,7 @@ class _BlogBodyState extends State<BlogBody> {
   ListBlog Data;
   bool loader = false;
 
+  //getting API result to call here
   @override
   void initState() {
     super.initState();
